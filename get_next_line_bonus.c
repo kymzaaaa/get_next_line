@@ -1,34 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: steve <steve@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/31 08:45:47 by steve             #+#    #+#             */
-/*   Updated: 2024/09/03 16:45:44 by steve            ###   ########.fr       */
+/*   Created: 2024/09/03 16:29:50 by steve             #+#    #+#             */
+/*   Updated: 2024/09/03 16:45:58 by steve            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	ft_getc(int fd)
 {
-	static char		buffer[BUFFER_SIZE];
-	static char		*cursor;
-	static int		buff_bytes;
+	static t_fd_buffer	fd_buffer[OPEN_MAX + 1];
 
-	if (buff_bytes == 0)
+	if (fd_buffer[fd].buff_bytes == 0)
 	{
-		buff_bytes = read(fd, buffer, BUFFER_SIZE);
-		if (buff_bytes < 0)
-			return (buff_bytes++, ERROR);
-		cursor = buffer;
+		fd_buffer[fd].buff_bytes = read(fd, fd_buffer[fd].buffer, BUFFER_SIZE);
+		if (fd_buffer[fd].buff_bytes < 0)
+			return (fd_buffer[fd].buff_bytes++, ERROR);
+		fd_buffer[fd].cursor = fd_buffer[fd].buffer;
 	}
-	buff_bytes--;
-	if (buff_bytes >= 0)
-		return (*cursor++);
-	return (buff_bytes++, EOF);
+	fd_buffer[fd].buff_bytes--;
+	if (fd_buffer[fd].buff_bytes >= 0)
+		return (*(fd_buffer[fd].cursor)++);
+	return (fd_buffer[fd].buff_bytes++, EOF);
 }
 
 int	ft_putc(t_line *line, char c)
