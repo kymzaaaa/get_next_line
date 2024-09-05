@@ -6,7 +6,7 @@
 /*   By: steve <steve@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:34:09 by steve             #+#    #+#             */
-/*   Updated: 2024/09/05 08:04:14 by steve            ###   ########.fr       */
+/*   Updated: 2024/09/05 09:37:33 by steve            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <limits.h>
+
+# ifndef OPEN_MAX
+#  define OPEN_MAX 1024
+# endif
 
 # ifndef EOF
 #  define EOF 0x1A
